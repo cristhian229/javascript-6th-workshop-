@@ -1,3 +1,85 @@
+const url = "http://localhost:3000/roomTypes";
+
+async function index() {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Fetch request failed");
+    }
+    const data = await response.json();
+
+    data.forEach((dato) => {
+      console.log(dato);
+    });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+
+
+class Habitacion{
+    constructor(name, description, capacity){
+    this.name = name
+    this.description = description
+    this.capacity = capacity
+}
+}
+
+async function enviarHabitacion() {
+    const tipoHabitacion = new Habitacion("de super lujo","Habitacion de lujo para 15",15)
+
+    try {
+    const response = await fetch(url, {
+      method: "POST",
+      body: JSON.stringify(tipoHabitacion),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al enviar datos');
+    }
+
+    console.log('Datos enviados correctamente');
+  } catch (error) {
+    console.error('Error al enviar datos:', error);
+  }
+}
+
+//enviarHabitacion()
+
+async function editarHabitacion() {
+    const idToedit = "4"
+    const tipoHabitacion = new Habitacion("de super lujo","Habitacion de lujo para 15",15)
+      try {
+        const response = await fetch(url +"/"+ idToedit, {
+          method: "PUT",
+          body: JSON.stringify(tipoHabitacion),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Error al enviar datos");
+        }
+
+        console.log("Datos enviados correctamente");
+      } catch (error) {
+        console.error("Error al enviar datos:", error);
+      }  
+    
+    
+
+}
+//editarHabitacion()
+index()
+
+
+/*
+
 // Ruta del archivo data.json
 const url = "http://localhost:3000/data"; // Cambiar por la ruta correcta
 
@@ -79,6 +161,8 @@ const GenerarIdReserva = function () {
 };
 
 let idReserva = GenerarIdReserva();
+
+*/
 
 // Llamar a la función para cargar y mostrar el contenido de data.json
 // cargarYMostrarData()
